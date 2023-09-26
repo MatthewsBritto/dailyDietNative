@@ -1,0 +1,10 @@
+Nesse desafio, você vai desenvolver uma aplicação de cadastro de refeições, que contém as seguintes funcionalidades:
+
+- Adicionar uma nova refeição
+- Editar uma refeição
+- Remover uma refeição da listagem
+- Mostrar as estatísticas do progresso da dieta
+- Navegação entre telas em pilha
+- Armazenamento local das refeições
+
+*listas divididas em seções podem ser mais facilmente implementadas com a SectionList do que com a FlatList
