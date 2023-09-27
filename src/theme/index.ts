@@ -21,8 +21,8 @@ export default {
    },
 
    FONT_FAMILY : {
-      // REGULAR: ,
-      // BOLD:
+      REGULAR:'NunitoSans_400Regular',
+      BOLD:'NunitoSans_700Bold',
    },
 
    FONT_SIZE : {
