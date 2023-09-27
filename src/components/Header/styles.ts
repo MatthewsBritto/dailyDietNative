@@ -5,7 +5,7 @@ export const Container = styled.View`
    width:100%;
    flex-direction: row;
    justify-content:space-between;
-   padding:24px 0;
+   padding:30px 0;
    align-items:center;
 `
 export const Logo = styled.Image`
@@ -29,7 +29,7 @@ export const Title = styled.Text`
       font-family:${theme.FONT_FAMILY.BOLD};
       font-size:${theme.FONT_SIZE.LG}px;
    `}
-  
+   
 `
  
 export const TitleContainer = styled.View`
