@@ -1,40 +1,38 @@
 import LogoImg from '@assets/Logo.png'
-import { Container, Avatar, Logo, BackButton, Icon, Title, TitleContainer } from './styles'
-import { useState } from 'react'
+import { Container, Avatar, Logo, BackButton, Icon, Title, TitleContainer, ContainerLogo} from './styles'
+import { ReactElement, useEffect, useState } from 'react'
 
-type Props ={
+
+
+type PropsHeader =  {
    showButton?: boolean
+   text?: string
+   color?:string
 }
  
-export function Header( { showButton }: Props ){
+export function Header( { showButton, color, text, ...rest }: PropsHeader ) {
 
    const [  title, setTitle ] = useState<string>('')
-
-
+  
    return (
-      
-      <Container>
-         {
-            showButton ? 
-
-               <>
-                     <BackButton>
-                        <Icon />
-                     </BackButton>
-                  <TitleContainer>
-                     <Title>
-                        {title ? title : null}
-                     </Title>
-                  </TitleContainer>
-
-               </> 
-                  : 
-               <>
-                  <Logo source={LogoImg} />
-                  <Avatar /> 
-               </>
-         }
-      </Container> 
-      
-   )
+   <>
+      { showButton ? 
+         <Container text={text} {...rest}>
+            <BackButton >
+                <Icon color={color} /> 
+            </BackButton>
+            <TitleContainer>
+               <Title>
+                  {text ? text : null}
+               </Title>
+            </TitleContainer>
+         </Container> 
+         : 
+         <ContainerLogo>
+            <Logo source={LogoImg} />
+            <Avatar /> 
+         </ContainerLogo>
+      }   
+   </>
+   )      
 }

@@ -1,9 +1,10 @@
 import { ThemeProvider } from 'styled-components';
-import { StatusBar } from 'react-native';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { StatusBar,ActivityIndicator } from 'react-native';
 import  theme  from '@theme/index'
 import { useFonts , NunitoSans_400Regular, NunitoSans_700Bold } from '@expo-google-fonts/nunito-sans'
 import { Home } from '@screens/Home';
+import { Analytics } from '@screens/Analytics';
+import { FormMeal } from '@screens/Form';
 
 export default function App() {
 
@@ -13,10 +14,10 @@ export default function App() {
     <ThemeProvider theme={ theme }>
       <StatusBar
         barStyle={'light-content'}
-        backgroundColor={'#333'}
+        // backgroundColor={'transparent'}
         // translucent
       />
-      { fontsLoaded ? <Home /> : <ActivityIndicator/> }
+      { fontsLoaded ? <FormMeal /> : <ActivityIndicator/> }
     </ThemeProvider>
   );
 }

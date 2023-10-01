@@ -1,13 +1,22 @@
 import styled, { css } from "styled-components/native";
 import { ArrowLeft } from 'phosphor-react-native'
 
-export const Container = styled.View`
+type Props = {
+   text?: string;
+}
+
+export const Container = styled.View<Props>`
    width:100%;
    flex-direction: row;
-   justify-content:space-between;
-   padding:30px 0;
    align-items:center;
+   padding: ${props => props.text ? 24 : 0}px;
+   justify-content:space-between;
+  
+   `
+export const ContainerLogo = styled(Container)`
+   padding:30px 0;
 `
+
 export const Logo = styled.Image`
    height:37px;
    width:82px;
@@ -19,10 +28,10 @@ export const Avatar = styled.View`
    border: 2px solid ${({ theme }) => theme.COLORS.GREEN_DARK};
 `
 export const BackButton = styled.TouchableOpacity`
-   width:100%;
    position:absolute;
+   padding:24px;
+   width:100%;
 `
-
 export const Title = styled.Text`
    ${({theme}) => css`
       color: ${theme.COLORS.GRAY_1};
@@ -30,17 +39,13 @@ export const Title = styled.Text`
       font-size:${theme.FONT_SIZE.LG}px;
    `}
    
-`
- 
+` 
 export const TitleContainer = styled.View`
-   flex:1;
-   align-items: center;
-
+   margin:0 auto;
 `
 export const Icon = styled(ArrowLeft).attrs(({theme}) => ({
-   size: 30,
-   color: theme.COLORS.GRAY_1
- }))``
-
+   size: 24,
+   
+}))``
 
 
