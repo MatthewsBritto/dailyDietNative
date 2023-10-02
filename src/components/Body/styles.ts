@@ -8,5 +8,6 @@ export const Container = styled.View`
   border-top-right-radius:20px;
   background-color:${({theme}) => theme.COLORS.GRAY_7};
   position:relative;
-  top:-20px;
+  /* justify-content: space-between; */
+  /* margin-top:-20px; */
 `

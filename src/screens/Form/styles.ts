@@ -6,10 +6,11 @@ type Props = {
 
 export const Container = styled.View`
    flex: 1;
-   justify-content:space-between;
 `
 export const SeparatorContainer = styled.View`
    width: 100%;
+   flex:1;
+   flex-direction:column-reverse;
 `
 export const DateHourContainer = styled.View`
    width: 100%;

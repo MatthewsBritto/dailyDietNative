@@ -6,7 +6,7 @@ import { Button } from '@components/Button'
 export function Review(){
    return (
       <Container>
-         <Header showButton text="Refeição"/>
+         <Header showButton text={"Refeição"} />
          <Body>
                <>
                   <TextContainer>

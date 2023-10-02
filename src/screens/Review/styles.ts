@@ -2,6 +2,7 @@ import styled, { css } from "styled-components/native";
 
 export const Container = styled.View`
    flex:1
+   background-color:red;
 `
 export const TextContainer = styled.View`
    width:100%;
