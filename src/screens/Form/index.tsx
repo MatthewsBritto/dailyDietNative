@@ -12,6 +12,8 @@ type FormProps = {
 
 export function FormMeal({ type = 'NEUTRO' }:FormProps){
 
+   const [ activeButton, setActiveButton ] = useState([true,false])
+
    const { COLORS } = useTheme()
 
    const [ headerColor, setHeaderColor] = useState(() => {
@@ -25,7 +27,12 @@ export function FormMeal({ type = 'NEUTRO' }:FormProps){
          return COLORS.RED_LIGTH
       }
    })
-   
+
+   function changeActiveButton(buttonId:number) {
+      buttonId === 1 ? setActiveButton([true,false]) : setActiveButton([false,true])
+   }
+
+
    return (
       <Container>
          <HeaderContainer color={headerColor}>
@@ -33,9 +40,9 @@ export function FormMeal({ type = 'NEUTRO' }:FormProps){
          </HeaderContainer>
 
          <Body>
-            <SeparatorContainer>
 
-               <FormContainer>
+            <>
+             <FormContainer>
                   <InputForm
                      title={'Nome'}
                   />
@@ -58,12 +65,14 @@ export function FormMeal({ type = 'NEUTRO' }:FormProps){
                      </HourContainer>
                   </DateHourContainer>
                
-               <InputForm title='Está dentro da dieta?' input={false}/>
-               <DateHourContainer>
+                  <InputForm title='Está dentro da dieta?' input={false}/>
+                  <DateHourContainer>
                      <DateContainer>
                         <Button 
                         switchBtn 
                         text='Sim'
+                        active={activeButton[0]}
+                        onPress={() => changeActiveButton(1)}
                         />
                      </DateContainer>
                      <DateContainer>
@@ -71,14 +80,17 @@ export function FormMeal({ type = 'NEUTRO' }:FormProps){
                            switchBtn 
                            text='Não'
                            type='OUTSIDE'
+                           active={activeButton[1]}
+                           onPress={() => changeActiveButton(2)}
                         />
                      </DateContainer>
-               </DateHourContainer>
+                  </DateHourContainer>
                </FormContainer>
 
-               <Button text='Cadastrar refeição' />
-            
-            </SeparatorContainer>
+               <SeparatorContainer>
+                  <Button text='Cadastrar refeição' />
+               </SeparatorContainer>
+             </>
          </Body>
 
       </Container>

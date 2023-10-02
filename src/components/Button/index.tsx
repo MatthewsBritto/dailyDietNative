@@ -10,10 +10,10 @@ type Props = TouchableOpacityProps & ButtonProps & StatusIconProps &{
    text: string;
    icon?: 'Plus' | 'Trash' | 'Pencil'
    switchBtn?:boolean
-   active: boolean
+   active?: boolean
 }
 
-export function Button({ dark = true, text, icon, switchBtn = false, type="INSIDE", active,...rest}:Props ){
+export function Button({ dark = true, text, icon, switchBtn = false, type="INSIDE", active = false,...rest}:Props ){
 
    let Icon;
 
@@ -52,7 +52,7 @@ export function Button({ dark = true, text, icon, switchBtn = false, type="INSID
                </Title>
             </Container>
             :
-            <SwitchButton active={active} colorProps={colorProps}>
+            <SwitchButton {...rest} active={active} colorProps={colorProps} >
                <StatusIcon type={type} />
                <Title>
                   {text}

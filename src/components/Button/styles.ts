@@ -20,7 +20,6 @@ type SwitchButtonProps = {
 export const Container = styled(TouchableOpacity)<ButtonProps>`
    width:100%;
    padding:16px 24px;
-   
    background-color: ${({theme, dark}) => dark ? 
       theme.COLORS.GRAY_2 : theme.COLORS.GRAY_7}; 
    
@@ -40,7 +39,7 @@ export const Title = styled.Text<ButtonProps>`
    
 `
 
-export const SwitchButton = styled.TouchableOpacity<SwitchButtonProps>`
+export const SwitchButton = styled(TouchableOpacity)<SwitchButtonProps>`
    width:100%;
    padding:16px;
    align-items: center;
