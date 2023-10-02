@@ -4,6 +4,7 @@ import { Card } from '@components/Card'
 import { Body } from '@components/Body' 
 import { Header } from '@components/Header'
 import { useEffect, useState } from 'react'
+import { StatusBar } from 'expo-status-bar'
 
 type Props = {
    percent: number
@@ -18,7 +19,11 @@ export function Analytics ({ percent }:Props){
    { background: COLORS.RED_LIGTH, color: COLORS.RED_DARK}
 
    return(
-      <Container>
+      <Container color={changeColors.background}>
+         <StatusBar 
+            backgroundColor={changeColors.background}
+            translucent
+         />
          <HeaderContainer color={changeColors.background}>
             <Header
                showButton

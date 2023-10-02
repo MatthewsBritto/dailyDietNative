@@ -13,7 +13,7 @@ export function InputForm({ title, height, input = true}: InputFormProps){
             {title}
          </Title>
    
-         { input ? <Input style={{height:height}} />  : null  }
+         { input ? <Input  style={{height:height}} />  : null  }
       </Container>
    )
 }

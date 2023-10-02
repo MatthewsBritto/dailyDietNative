@@ -11,7 +11,6 @@ export const Container = styled.View<Props>`
    align-items:center;
    padding: ${props => props.text ? 20 : 0}px;
    justify-content:space-between;
-   background-color:red;
   
    `
 export const ContainerLogo = styled(Container)`

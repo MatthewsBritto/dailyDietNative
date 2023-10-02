@@ -3,17 +3,17 @@ import {Container, DateContainer, DateHourContainer, HourContainer, HeaderContai
 import { Body } from '@components/Body'
 import { InputForm } from '@components/Input'
 import { useTheme } from 'styled-components/native'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@components/Button'
+import { StatusBar } from 'expo-status-bar'
 
 type FormProps = {
    type: 'NEUTRO' | 'GREEN' | 'RED' 
 }
 
-export function FormMeal({ type = 'NEUTRO' }:FormProps){
+export function FormMeal({ type = 'NEUTRO' }:FormProps) {
 
-   const [ activeButton, setActiveButton ] = useState([true,false])
-
+   const [ active, setActive] = useState([true, false])
    const { COLORS } = useTheme()
 
    const [ headerColor, setHeaderColor] = useState(() => {
@@ -27,22 +27,24 @@ export function FormMeal({ type = 'NEUTRO' }:FormProps){
          return COLORS.RED_LIGTH
       }
    })
-
-   function changeActiveButton(buttonId:number) {
-      buttonId === 1 ? setActiveButton([true,false]) : setActiveButton([false,true])
+   
+   function changeColorButton(buttonId:number){
+      buttonId === 1 ? setActive([true,false]) : setActive([false,true])
    }
 
-
    return (
-      <Container>
+      <Container color={headerColor}>
+         <StatusBar 
+            backgroundColor={headerColor}
+            translucent
+         />
          <HeaderContainer color={headerColor}>
             <Header showButton text='Nova Refeição' />
          </HeaderContainer>
 
          <Body>
-
             <>
-             <FormContainer>
+               <FormContainer>
                   <InputForm
                      title={'Nome'}
                   />
@@ -55,7 +57,8 @@ export function FormMeal({ type = 'NEUTRO' }:FormProps){
                      <DateContainer>
                         <InputForm
                            title={'Data'}
-                        />
+                           
+                           />
                      </DateContainer>
 
                      <HourContainer>
@@ -65,32 +68,32 @@ export function FormMeal({ type = 'NEUTRO' }:FormProps){
                      </HourContainer>
                   </DateHourContainer>
                
-                  <InputForm title='Está dentro da dieta?' input={false}/>
-                  <DateHourContainer>
+               <InputForm title='Está dentro da dieta?' input={false}/>
+               <DateHourContainer>
                      <DateContainer>
                         <Button 
-                        switchBtn 
-                        text='Sim'
-                        active={activeButton[0]}
-                        onPress={() => changeActiveButton(1)}
-                        />
+                           switchBtn 
+                           text='Sim'
+                           onPress={() => changeColorButton(1)}
+                           active={active[0]}
+                           />
                      </DateContainer>
                      <DateContainer>
                         <Button 
                            switchBtn 
                            text='Não'
                            type='OUTSIDE'
-                           active={activeButton[1]}
-                           onPress={() => changeActiveButton(2)}
+                           onPress={() => changeColorButton(2)}
+                           active={active[1]}
                         />
                      </DateContainer>
-                  </DateHourContainer>
+               </DateHourContainer>
                </FormContainer>
 
                <SeparatorContainer>
-                  <Button text='Cadastrar refeição' />
-               </SeparatorContainer>
-             </>
+               <Button text='Cadastrar refeição' />
+               </SeparatorContainer>   
+            </>
          </Body>
 
       </Container>

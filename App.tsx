@@ -7,6 +7,7 @@ import { Analytics } from '@screens/Analytics';
 import { FormMeal } from '@screens/Form';
 import { Feedback } from '@screens/Feedback';
 import { Review } from '@screens/Review';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App() {
 
@@ -14,12 +15,14 @@ export default function App() {
 
   return (
     <ThemeProvider theme={ theme }>
-      <StatusBar
-        barStyle={'light-content'}
-        // backgroundColor={'transparent'}
-        // translucent
-      />
-      { fontsLoaded ? <Review /> : <ActivityIndicator/> }
+      <SafeAreaView style={{flex:1}}>
+        <StatusBar
+          barStyle={'dark-content'}
+          backgroundColor={'transparent'}
+          translucent
+        />
+        { fontsLoaded ? <FormMeal type='NEUTRO' /> : <ActivityIndicator/> }
+      </SafeAreaView>
     </ThemeProvider>
   );
 }

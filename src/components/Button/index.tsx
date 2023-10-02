@@ -45,9 +45,9 @@ export function Button({ dark = true, text, icon, switchBtn = false, type="INSID
       <>
          { !switchBtn ? 
 
-            <Container  {...rest} dark>
+            <Container  {...rest} dark={dark}>
                   {Icon}            
-               <Title dark>
+               <Title dark={dark}>
                   {text}
                </Title>
             </Container>

@@ -4,8 +4,9 @@ type Props = {
    color?: string
 }
 
-export const Container = styled.View`
+export const Container = styled.View<Props>`
    flex: 1;
+   background-color:${props => props.color}
 `
 export const SeparatorContainer = styled.View`
    width: 100%;
@@ -26,7 +27,6 @@ export const HourContainer = styled.View`
 export const HeaderContainer = styled.View<Props>`
    width:100%;
    background-color:${props => props.color};
-   padding-bottom:24px;
 `
 export const FormContainer = styled.View` 
    width:100%;

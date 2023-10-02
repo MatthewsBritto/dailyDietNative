@@ -4,8 +4,9 @@ type Props = {
    color: string;
 }
 
-export const Container = styled.View`
-   flex:1; 
+export const Container = styled.View<Props>`
+   flex:1;
+   background-color:${props => props.color}; 
 ` 
 export const Title = styled.Text`
    ${({theme}) => css`
@@ -32,6 +33,6 @@ export const CounterEachMealType = styled.View`
 `
 export const HeaderContainer = styled.View<Props>`
    width: 100%;
-   padding: 24px 0;
+   padding-top: 24px;
    background-color: ${props => props.color}
 `

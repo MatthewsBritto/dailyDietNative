@@ -20,9 +20,8 @@ type SwitchButtonProps = {
 export const Container = styled(TouchableOpacity)<ButtonProps>`
    width:100%;
    padding:16px 24px;
-   background-color: ${({theme, dark}) => dark ? 
-      theme.COLORS.GRAY_2 : theme.COLORS.GRAY_7}; 
-   
+   background-color: ${props => props.dark ? props.theme.COLORS.GRAY_2 : props.theme.COLORS.GRAY_7 }; 
+   border:1px solid ${props => props.theme.COLORS.GRAY_1};
    flex-direction:row;
    align-items:center;
    justify-content:center;
@@ -34,8 +33,9 @@ export const Title = styled.Text<ButtonProps>`
       
       color:${ dark ?theme.COLORS.WHITE : theme.COLORS.GRAY_1};
       font-size:${theme.FONT_SIZE.SM}px;
-      font-family:${theme.FONT_FAMILY.REGULAR};
+      font-family:${theme.FONT_FAMILY.BOLD};
    `}
+   font-weight:700; 
    
 `
 
@@ -53,6 +53,7 @@ export const SwitchButton = styled(TouchableOpacity)<SwitchButtonProps>`
    
    border-color:${({theme, active, colorProps}) =>  active ?
             colorProps.borderColor : theme.COLORS.GRAY_6} ;
+            
    border-width: 1px;
 `
 export const StatusIcon = styled.View<StatusIconProps>`
