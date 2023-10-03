@@ -1,18 +1,24 @@
 import { useTheme } from 'styled-components/native'
-import { Container,CounterEachMealType, Title, CounterContainer, CounterSeparator,HeaderContainer} from './styles'
+import { 
+   Container,CounterEachMealType, Title, CounterContainer, 
+   CounterSeparator,HeaderContainer} from './styles'
 import { Card } from '@components/Card'
 import { Body } from '@components/Body' 
 import { Header } from '@components/Header'
-import { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
+import { useRoute } from '@react-navigation/native'
 
-type Props = {
+type PercentProps = {
    percent: number
 }
 
-export function Analytics ({ percent }:Props){
+export function Analytics (){
 
    const { COLORS } = useTheme()
+
+   const route = useRoute()
+
+   const { percent } = route.params as PercentProps 
 
   const changeColors = percent > 50 ? 
    { background: COLORS.GREEN_LIGHT, color: COLORS.GREEN_DARK } :

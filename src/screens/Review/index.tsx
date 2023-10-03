@@ -6,14 +6,21 @@ import { Button } from '@components/Button'
 import { useTheme } from 'styled-components/native'
 import { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
+import { useRoute } from '@react-navigation/native'
 
 
 type Props = {
    type: "IN" | "OUT"
 }
 
-export function Review({ type }:Props){
+export function Review(){
    const { COLORS } = useTheme()
+
+   const route = useRoute()
+
+   const { type } = route.params as Props
+   
+
    const [ colorHeader, setHeaderColor] = useState(type === "IN" ? 
       { background:COLORS.GREEN_LIGHT, color: COLORS.GREEN_DARK } : 
       { background:COLORS.RED_LIGTH, color: COLORS.RED_DARK })

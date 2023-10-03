@@ -6,15 +6,25 @@ import { useTheme } from 'styled-components/native'
 import { useEffect, useState } from 'react'
 import { Button } from '@components/Button'
 import { StatusBar } from 'expo-status-bar'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { checkAndCreateMeal } from '@storage/MealsDate/CreateMeal'
+import { addNewMeal } from '@storage/MealsInfos/addNewMeal'
+import { MealProps } from '@storage/MealsDate/MealStorageDTO'
 
 type FormProps = {
    type: 'NEUTRO' | 'GREEN' | 'RED' 
 }
 
-export function FormMeal({ type = 'NEUTRO' }:FormProps) {
+export function FormMeal() {
 
    const [ active, setActive] = useState([true, false])
    const { COLORS } = useTheme()
+
+
+   const { navigate } = useNavigation()
+   const route = useRoute()
+
+   const { type } = route.params as FormProps
 
    const [ headerColor, setHeaderColor] = useState(() => {
       if(type === 'NEUTRO'){
@@ -32,6 +42,30 @@ export function FormMeal({ type = 'NEUTRO' }:FormProps) {
       buttonId === 1 ? setActive([true,false]) : setActive([false,true])
    }
 
+   async function finishedRegister() {
+      const teste = new Date()
+
+      try{
+          const date = await checkAndCreateMeal(`${teste.getDate()}.${teste.getMonth() + 1}.${teste.getFullYear()}`);
+
+            const obj = {
+               title:'Testando',
+               time:'17:40',
+               type:"IN"
+            }
+            
+            if(date){
+               await addNewMeal(obj,date)
+            }
+         
+         navigate('feedback', { type: 'GREEN'});
+
+      } catch(error){
+         throw error
+      }
+   }
+
+
    return (
       <Container color={headerColor}>
          <StatusBar 
@@ -39,7 +73,7 @@ export function FormMeal({ type = 'NEUTRO' }:FormProps) {
             translucent
          />
          <HeaderContainer color={headerColor}>
-            <Header showButton text='Nova Refeição' />
+            <Header showButton text='Nova Refeição'/>
          </HeaderContainer>
 
          <Body>
@@ -91,7 +125,7 @@ export function FormMeal({ type = 'NEUTRO' }:FormProps) {
                </FormContainer>
 
                <SeparatorContainer>
-               <Button text='Cadastrar refeição' />
+                  <Button text='Cadastrar refeição' onPress={finishedRegister} />
                </SeparatorContainer>   
             </>
          </Body>
