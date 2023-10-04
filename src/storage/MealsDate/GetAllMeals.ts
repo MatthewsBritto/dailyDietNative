@@ -12,8 +12,7 @@ export async function getAllMealsDate(){
       
       const datesJson = dates ? JSON.parse(dates) : []
       
-      return datesJson     
-
+      return datesJson
    } catch(error) {
       
       throw error;

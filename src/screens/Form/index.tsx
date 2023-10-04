@@ -165,7 +165,7 @@ export function FormMeal() {
                </FormContainer>
 
                <SeparatorContainer>
-                  <Button text='Cadastrar refeição' onPress={() => getAllMealsDate()}/>
+                  <Button text='Cadastrar refeição' onPress={() => finishedRegister}/>
                </SeparatorContainer>   
             </>
          </Body>
