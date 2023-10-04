@@ -8,9 +8,13 @@ export async function checkAndCreateMeal( date:string ) {
 
    try {
       const dates =  await getAllMealsDate();
-      const filter = dates.filter(item => item === date)
+      
+      const alreadyHasDate = dates.includes(date)
 
-      if (filter) {
+      if (alreadyHasDate) {
+         // entra aqui caso tenha o dia cadastrado
+
+         console.log(`Já se encontra ${date} na lista`)
 
          return date;
       
@@ -20,7 +24,9 @@ export async function checkAndCreateMeal( date:string ) {
       
       await AsyncStorage.setItem(MEALS_DATE, storage);
       
-      console.log(storage);
+      console.log(`Cadastrou o dia ${date}`);
+
+      return date;
 
    } catch(error) {
       

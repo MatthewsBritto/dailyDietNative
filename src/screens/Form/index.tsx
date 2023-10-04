@@ -10,6 +10,7 @@ import { checkAndCreateMeal } from '@storage/MealsDate/CreateMeal'
 import { addNewMeal } from '@storage/MealsInfos/addNewMeal'
 import { MealProps } from '@storage/MealsDate/MealStorageDTO'
 import { TextInput } from 'react-native'
+import { getAllMealsDate } from '@storage/MealsDate/GetAllMeals'
 
 type FormProps = {
    type: 'NEUTRO' | 'GREEN' | 'RED' 
@@ -18,11 +19,14 @@ type FormProps = {
 export function FormMeal() {
 
    const { COLORS } = useTheme()
+
+   const dateToday = new Date()
+   const dateFomatted = `0${dateToday.getDate()}.${dateToday.getMonth() + 1}.${dateToday.getFullYear()}`
    
    const [ title , setTitle ] = useState('')
    const [ description , setDescription ] = useState('')
-   const [ date, setDate ] = useState('')
-   const [ hour, setHour ] = useState('')
+   const [ date, setDate ] = useState(dateFomatted)
+   const [ hour, setHour ] = useState(`${dateToday.getHours()}:${dateToday.getMinutes()}`)
    const [ active, setActive] = useState([true, false])
 
    
@@ -49,29 +53,33 @@ export function FormMeal() {
       buttonId === 1 ? setActive([true,false]) : setActive([false,true])
    }
 
-   async function finishedRegister() {
-      const teste = new Date()
+   async function finishedRegister(formDate:string) {
 
       try{
-          const date = await checkAndCreateMeal(`${teste.getDate()}.${teste.getMonth() + 1}.${teste.getFullYear()}`);
+            const date = await checkAndCreateMeal(formDate);
 
-            const obj = {
-               title:'Batatinha',
-               time:'19:18',
-               type:"OUT"
+            const obj : MealProps  = {
+               date:date,
+               data:{
+                  title:title,
+                  description:description,
+                  time:hour,
+                  type:active[0] === true ? "IN" : "OUT"
+               }
             }
             
-            if(date){
-               await addNewMeal(obj,date)
+            if(date && obj){
+               const register = await addNewMeal(obj);
+               navigate('feedback', { type: register});
             }
          
-         navigate('feedback', { type: 'GREEN'});
 
       } catch(error){
          throw error
       }
    }
 
+   // console.log(date)
 
    return (
       <Container color={headerColor}>
@@ -116,6 +124,8 @@ export function FormMeal() {
                         <Input 
                            value={date}
                            onChangeText={setDate}
+                           placeholder={date}
+                           onFocus={() => setDate('')}                        
                         /> 
 
                      </DateContainer>
@@ -127,6 +137,7 @@ export function FormMeal() {
                         <Input 
                            value={hour}
                            onChangeText={setHour}
+                           onFocus={() => setHour('')}
                         /> 
                      </HourContainer>
                   </DateHourContainer>
@@ -154,7 +165,7 @@ export function FormMeal() {
                </FormContainer>
 
                <SeparatorContainer>
-                  <Button text='Cadastrar refeição' onPress={finishedRegister} />
+                  <Button text='Cadastrar refeição' onPress={() => getAllMealsDate()}/>
                </SeparatorContainer>   
             </>
          </Body>
