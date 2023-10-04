@@ -1,7 +1,6 @@
 import { Header } from '@components/Header'
-import {Container, DateContainer, DateHourContainer, HourContainer, HeaderContainer,FormContainer, SeparatorContainer} from './styles'
+import {Container, DateContainer, DateHourContainer, HourContainer, HeaderContainer,FormContainer, SeparatorContainer, Title, ContainerInput, Input} from './styles'
 import { Body } from '@components/Body'
-import { InputForm } from '@components/Input'
 import { useTheme } from 'styled-components/native'
 import { useEffect, useState } from 'react'
 import { Button } from '@components/Button'
@@ -10,6 +9,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { checkAndCreateMeal } from '@storage/MealsDate/CreateMeal'
 import { addNewMeal } from '@storage/MealsInfos/addNewMeal'
 import { MealProps } from '@storage/MealsDate/MealStorageDTO'
+import { TextInput } from 'react-native'
 
 type FormProps = {
    type: 'NEUTRO' | 'GREEN' | 'RED' 
@@ -17,11 +17,18 @@ type FormProps = {
 
 export function FormMeal() {
 
-   const [ active, setActive] = useState([true, false])
    const { COLORS } = useTheme()
+   
+   const [ title , setTitle ] = useState('')
+   const [ description , setDescription ] = useState('')
+   const [ date, setDate ] = useState('')
+   const [ hour, setHour ] = useState('')
+   const [ active, setActive] = useState([true, false])
 
+   
 
    const { navigate } = useNavigation()
+
    const route = useRoute()
 
    const { type } = route.params as FormProps
@@ -49,9 +56,9 @@ export function FormMeal() {
           const date = await checkAndCreateMeal(`${teste.getDate()}.${teste.getMonth() + 1}.${teste.getFullYear()}`);
 
             const obj = {
-               title:'Testando',
-               time:'17:40',
-               type:"IN"
+               title:'Batatinha',
+               time:'19:18',
+               type:"OUT"
             }
             
             if(date){
@@ -79,30 +86,52 @@ export function FormMeal() {
          <Body>
             <>
                <FormContainer>
-                  <InputForm
-                     title={'Nome'}
-                  />
-                  <InputForm
-                     title={'Descrição'}
-                     height={120}
-                  />
+                  <ContainerInput>
+                     <Title>
+                        Nome
+                     </Title>
+                     <Input 
+                        value={title}
+                        onChangeText={setTitle}
+                     /> 
+                  </ContainerInput>
+
+                  <ContainerInput>
+                     <Title>
+                        Descrição
+                     </Title>
+                     <Input 
+                        value={description}
+                        onChangeText={setDescription}
+                        style={{height:120}} 
+                      /> 
+                     </ContainerInput>
 
                   <DateHourContainer>
                      <DateContainer>
-                        <InputForm
-                           title={'Data'}
-                           
-                           />
+                        <Title>
+                           Data
+                        </Title>
+
+                        <Input 
+                           value={date}
+                           onChangeText={setDate}
+                        /> 
+
                      </DateContainer>
 
                      <HourContainer>
-                        <InputForm
-                           title={'Hora'}
-                        />
+                        <Title>
+                         Hora
+                        </Title>
+                        <Input 
+                           value={hour}
+                           onChangeText={setHour}
+                        /> 
                      </HourContainer>
                   </DateHourContainer>
                
-               <InputForm title='Está dentro da dieta?' input={false}/>
+                  <Title>Está dentro da dieta?</Title>
                <DateHourContainer>
                      <DateContainer>
                         <Button 

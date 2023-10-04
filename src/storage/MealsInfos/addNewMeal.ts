@@ -10,21 +10,23 @@ export async function addNewMeal( data: {} , date:string ) {
       // }
 
       try {
-         const fetch = await AsyncStorage.getItem(date);
+         // puxa informação de refeição para o mesmo dia data
+         const fetch = await AsyncStorage.getItem(`${MEALS_INFOS}-${date}`);
          
          if(fetch) {
             // add mais informação aos dates
+            const storage =  JSON.parse(fetch) 
+            const newStorage = JSON.stringify([...storage, data]);
+            await AsyncStorage.setItem(`${MEALS_INFOS}-${date}`, newStorage);
+            
+            console.log(JSON.parse(newStorage));
          }
 
-         const storage = fetch ? JSON.parse(fetch) : {}
 
-         const newStorage = JSON.stringify([...storage,data])
 
-         // const stringObj = JSON.stringify(`${data}-${date}`, storage)
+         
+         
 
-         await AsyncStorage.setItem(`${MEALS_INFOS}-${date}`, newStorage);
-
-         console.log('talvez tenha funcionado')
 
       } catch (error) {
 

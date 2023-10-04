@@ -6,14 +6,14 @@ type InputFormProps = {
    input?:boolean
 }
 
-export function InputForm({ title, height, input = true}: InputFormProps){
+export function InputForm({ title, height, input = true, ...rest}: InputFormProps){
    return (
-      <Container >
+      <Container {...rest}>
          <Title>
             {title}
          </Title>
    
-         { input ? <Input  style={{height:height}} />  : null  }
+         { input ? <Input  style={{height:height}} {...rest} />  : null  }
       </Container>
    )
 }
