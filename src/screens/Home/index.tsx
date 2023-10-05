@@ -10,63 +10,41 @@ import { Header } from "@components/Header/index";
 import { Button } from "@components/Button";
 import { Meal } from "@components/Meal";
 import { useEffect, useState } from "react";
+import { getMealsInfosByDate } from "@storage/getMealsInfosByDate";
+import { MealProps } from "@storage/MealsDate/MealStorageDTO";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-interface MealsProps  {
-   date: string;
-   data: {
-      title: string;
-      time: string;
-      type: "IN" | "OUT";
-   }[]
-}
+
 
 export function Home() {
 
-   const [ data, setData ] = useState<MealsProps[]>([])
+   const [ data, setData ] = useState<MealProps[]>([])
    
-   // : MealsProps[]  = [
-   //    { date: "28.09.2023", data:[
-   //       {title: "X-TUDO", type: "OUT", time: "12:50"},
-   //       {title: "Frutas", type: "IN", time: "22:00"},
-   //    ]},
-   //    { date: "29.09.2023", data:[
-   //       {title: "PIZZA", type: "OUT", time: "21:30"},
-   //       {title: "AVEIA", type: "IN", time: "10:00"},
-   //    ]},
-   //    { date: "30.09.2023", data:[
-   //       {title: "PIZZA", type: "OUT", time: "21:30"},
-   //       {title: "AVEIA", type: "IN", time: "10:00"},
-   //    ]},
-   // ]
 
    const { navigate } = useNavigation()
 
-   async function fetchMealStored(){
 
-      try {
-         const date = await getAllMealsDate()
-
-         // setData(date)
-
-      } catch(error){
-         throw error;
-
-      }
-
-   }
-
-   function handleGoForm(){
+   async function handleGoForm(){
       navigate("form",{ type:"NEUTRO" })
    }
+
 
    function handleGoToAnalytics(){
       navigate('analytics',{ percent: 65 })
    }
 
-   // useEffect(() => { 
-   //    fetchMealStored()
-   // },[data])
+   useEffect(() => { 
+
+      async function Teste() {
+         const teste = await getMealsInfosByDate();         
+         // const teste = await AsyncStorage.clear();         
+         setData(teste);
+      }
+      Teste();
+
+   },[])
+
 
    return(
       <Container>
@@ -80,35 +58,37 @@ export function Home() {
          />
          <Title>Refeições</Title >
          <Button 
-            onPress={handleGoForm}
+            onPress={() => handleGoForm()}
+            // onPress={() => console.log(data)}
             text="Nova refeição"
             icon="Plus"
          />
-          <SectionList
-            sections={data}
-            keyExtractor={(item) => (item.title)}
-            renderItem={({ item }) => (
-               <Meal
-                  key={item.title}
-                  time={item.time}
-                  title={item.title}
-                  type={item.type}
-                  
-               />
-            )}
-            renderSectionHeader={({ section }) =>	(
+
+         <SectionList
+               sections={data}
+               keyExtractor={(item) => (item.title)}
+               renderItem={({ item }) => (
+                  <Meal
+                     key={item.title}
+                     time={item.time}
+                     title={item.title}
+                     type={item.type}
+                     
+                  />
+               )}
+               renderSectionHeader={({ section }) =>(
                <HeaderList>
-                  {section.date}
+                  {section.titleDate}
                </HeaderList>
-            )}
+               )}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={() => (
-               <View style={{marginTop:'50%',alignItems:'center'}}>
+               <View style={{marginTop:'50%', alignItems:'center'}}>
                   <Text>Que tal cadastrar uma refeição?</Text>
                </View>
-
              )}
-           />
+         />
+
       </Container>
    )
 }                

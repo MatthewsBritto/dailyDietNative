@@ -8,9 +8,10 @@ import { StatusBar } from 'expo-status-bar'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { checkAndCreateMeal } from '@storage/MealsDate/CreateMeal'
 import { addNewMeal } from '@storage/MealsInfos/addNewMeal'
-import { MealProps } from '@storage/MealsDate/MealStorageDTO'
+import { Dataprops, MealProps } from '@storage/MealsDate/MealStorageDTO'
 import { TextInput } from 'react-native'
 import { getAllMealsDate } from '@storage/MealsDate/GetAllMeals'
+import { getMealsInfosByDate } from '@storage/getMealsInfosByDate'
 
 type FormProps = {
    type: 'NEUTRO' | 'GREEN' | 'RED' 
@@ -58,28 +59,23 @@ export function FormMeal() {
       try{
             const date = await checkAndCreateMeal(formDate);
 
-            const obj : MealProps  = {
-               date:date,
-               data:{
+            const obj: Dataprops = {
                   title:title,
                   description:description,
                   time:hour,
                   type:active[0] === true ? "IN" : "OUT"
-               }
-            }
+            }         
             
             if(date && obj){
-               const register = await addNewMeal(obj);
-               navigate('feedback', { type: register});
+               const register = await addNewMeal(date,obj);
+               // navigate('feedback', { type: register});
             }
          
 
-      } catch(error){
+      } catch(error) {
          throw error
       }
    }
-
-   // console.log(date)
 
    return (
       <Container color={headerColor}>
@@ -165,7 +161,7 @@ export function FormMeal() {
                </FormContainer>
 
                <SeparatorContainer>
-                  <Button text='Cadastrar refeição' onPress={() => finishedRegister}/>
+                  <Button text='Cadastrar refeição' onPress={() => finishedRegister(date)}/>
                </SeparatorContainer>   
             </>
          </Body>

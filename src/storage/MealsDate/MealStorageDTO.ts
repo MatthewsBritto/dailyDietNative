@@ -1,9 +1,11 @@
+export interface Dataprops  {
+   title: string;
+   description:string;
+   time: string;
+   type: "IN" | "OUT";
+}
+
 export type MealProps = {
-   date: string;
-   data: {
-      title: string;
-      description:string;
-      time: string;
-      type: "IN" | "OUT";
-   }
+   titleDate: string;
+   data: Dataprops[]
 }
