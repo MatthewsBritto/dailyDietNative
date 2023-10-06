@@ -6,24 +6,51 @@ import { Button } from '@components/Button'
 import { useTheme } from 'styled-components/native'
 import { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { Dataprops, MealProps } from '@storage/MealsDate/MealStorageDTO'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { MEALS_DATE, MEALS_INFOS } from '@storage/storageConfig'
 
 
-type Props = {
-   type: "IN" | "OUT"
-}
 
 export function Review(){
    const { COLORS } = useTheme()
 
    const route = useRoute()
 
-   const { type } = route.params as Props
+   const { id, description, time, title, type, date } = route.params as Dataprops
    
+   const { navigate } = useNavigation()
 
    const [ colorHeader, setHeaderColor] = useState(type === "IN" ? 
       { background:COLORS.GREEN_LIGHT, color: COLORS.GREEN_DARK } : 
       { background:COLORS.RED_LIGTH, color: COLORS.RED_DARK })
+
+
+   async function handleDeleteMeal() {
+     
+     try {
+         const teste = await AsyncStorage.getItem(`${MEALS_INFOS}-04.10.2023`);
+
+         if(teste){
+            const json : MealProps = JSON.parse(teste)
+            
+            const listWithoutMealDeleted =  json.data.filter(item => item.id !== id);
+
+            await AsyncStorage.setItem(`${MEALS_INFOS}-04.10.2023`, JSON.stringify(listWithoutMealDeleted))
+         
+            console.log('deletou')
+
+            return navigate.
+         }
+
+
+         
+      }catch(error){
+         throw error
+      }
+
+   }
 
    return (
       <Container color={colorHeader.background}> 
@@ -39,10 +66,10 @@ export function Review(){
                <SeparatorContainer>
                   <TextContainer>
                      <Title>
-                        X-Tudo
+                        {title}
                      </Title>
                      <SubTitle>
-                        Xis completo da lancheria do bairro
+                        {description}
                      </SubTitle>
                   </TextContainer>
 
@@ -51,7 +78,7 @@ export function Review(){
                         Data e hora
                      </Date>
                      <SubTitle>
-                        12/08/2022 ás 20:00
+                        { date } ás { time }
                      </SubTitle>
                   </TextContainer>
 
@@ -59,7 +86,7 @@ export function Review(){
                      <StatusType>
                         <StatusIcon color={colorHeader.color} />
                         <SubTitle>
-                           fora da dieta
+                           { type === "IN" ? 'dentro da dieta' : 'fora da dieta'}
                         </SubTitle>
                      </StatusType>
                   </TextContainer>
@@ -67,7 +94,7 @@ export function Review(){
                </SeparatorContainer>
                <ButtonContainer >
                   <Button text='Editar refeição' icon='Pencil' />
-                  <Button dark={false} text='Excluir refeição' icon='Trash'/>
+                  <Button dark={false} text='Excluir refeição' icon='Trash' onPress={() => handleDeleteMeal()}/>
                </ButtonContainer>
             </>
          </Body>

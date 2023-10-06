@@ -6,12 +6,18 @@ export declare global {
          home : undefined;
          analytics : {
             percent: number;
+            inside: number;
+            outside: number;
          };
          form:{
             type:'NEUTRO' | 'GREEN' | 'RED' ;
          };
          review: {
-            type: "IN" | "OUT";
+               id:string;
+               title: string;
+               description:string;
+               time: string;
+               type: "IN" | "OUT";
          }
          feedback : {
             type: 'RED' | 'GREEN';

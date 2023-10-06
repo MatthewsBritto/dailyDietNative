@@ -8,8 +8,10 @@ import { Header } from '@components/Header'
 import { StatusBar } from 'expo-status-bar'
 import { useRoute } from '@react-navigation/native'
 
-type PercentProps = {
-   percent: number
+export type PercentProps = {
+   percent: number;
+   inside: number;
+   outside: number;
 }
 
 export function Analytics (){
@@ -18,9 +20,9 @@ export function Analytics (){
 
    const route = useRoute()
 
-   const { percent } = route.params as PercentProps 
+   const { percent, inside, outside } = route.params as PercentProps 
 
-  const changeColors = percent > 50 ? 
+  const changeColors = percent >= 50 ? 
    { background: COLORS.GREEN_LIGHT, color: COLORS.GREEN_DARK } :
    { background: COLORS.RED_LIGTH, color: COLORS.RED_DARK}
 
@@ -36,7 +38,7 @@ export function Analytics (){
                color={changeColors.color}
             />
             <Card
-               title={'18.86'}
+               title={`${percent}%`}
                subTitle={'das refeições dentro dieta'}
                styled
                percent={percent}
@@ -52,13 +54,13 @@ export function Analytics (){
                      subTitle='melhor sequência de pratos da dieta'
                   />
                   <Card
-                     title='109'
+                     title={`${outside + inside}`}
                      subTitle='refeições registradas'
                   />
                   <CounterContainer>
                      <CounterEachMealType>
                         <Card
-                           title='99'
+                           title={inside.toString()}
                            subTitle='refeições dentro da dieta'
                            styled
                            percent={100}
@@ -66,7 +68,7 @@ export function Analytics (){
                      </CounterEachMealType>
                      <CounterEachMealType>
                         <Card
-                           title='10'
+                           title={outside.toString()}
                            subTitle='refeições fora da dieta'
                            styled
                            percent={10}

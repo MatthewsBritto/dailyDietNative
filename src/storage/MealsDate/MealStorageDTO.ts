@@ -1,4 +1,6 @@
 export interface Dataprops  {
+   id:string;
+   date:string;
    title: string;
    description:string;
    time: string;

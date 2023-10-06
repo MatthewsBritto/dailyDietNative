@@ -12,22 +12,22 @@ export async function getMealsInfosByDate():Promise<MealProps[]>
          const fetchDates = await AsyncStorage.getItem(`${MEALS_DATE}`);
 
          
-
          if(fetchDates) {
+            
+            const jsonDates:any[] = JSON.parse(fetchDates) 
 
-            const jsonDates:any[] = JSON.parse(fetchDates)
+            // console.log(jsonDates.length)
 
-            const dates = jsonDates.sort((a,b) => a > b ? 1 : 0)
+            // const dates = jsonDates.sort((a,b) => a > b ? 1 : 0)
 
-            for (let i = 0 ; i < dates.length ; i++){
+            for (let i = 0 ; i < jsonDates.length ; i++){
                
                let dateInfoString = await AsyncStorage.getItem(`${MEALS_INFOS}-${jsonDates[i]}`)
                
                if(dateInfoString){
 
                   mealsByDay.push(JSON.parse(dateInfoString))
-               }
-             
+               }             
             }           
 
           return mealsByDay

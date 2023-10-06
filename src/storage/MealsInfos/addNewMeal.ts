@@ -13,27 +13,27 @@ export async function addNewMeal( titleDate:string , data:Dataprops ) {
          
          if(fetch) {
             // add mais informação aos dados existentes            
-
+            
             const storage = JSON.parse(fetch); 
+            
+            const newStorage = [...storage.data, data]
 
-            const newStorage = JSON.stringify(storage.data.push(data))
+            const StorageAtt = JSON.stringify({ titleDate , data: newStorage})
 
-            await AsyncStorage.setItem(`${MEALS_INFOS}-${titleDate}`, newStorage);
+            await AsyncStorage.setItem(`${MEALS_INFOS}-${titleDate}`, StorageAtt);
             
             return  data.type === 'IN' ? 'GREEN' : 'RED'
             
          }                 
 
          // Cria um novo registro de infos para o dia
-         // const { description, time, title , type } = data
 
-         // const newInfos = JSON.stringify( {titleDate, data:[data]})
+         const newInfos = JSON.stringify({titleDate, data:[data]})
          
-         // await AsyncStorage.setItem(`${MEALS_INFOS}-${titleDate}`, newInfos)
+         await AsyncStorage.setItem(`${MEALS_INFOS}-${titleDate}`, newInfos)
 
-         // return  data.type === 'IN' ? 'GREEN' : 'RED'
+         return  data.type === 'IN' ? 'GREEN' : 'RED'
 
-         console.log('caiu aqui')
 
       } catch (error) {
          throw error

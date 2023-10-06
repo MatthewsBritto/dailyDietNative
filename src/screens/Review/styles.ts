@@ -32,6 +32,7 @@ export const SubTitle = styled.Text `
       font-size:${theme.FONT_SIZE.MD}px;
       color: ${theme.COLORS.GRAY_2};
    `}
+
 `
 export const Date = styled(Title)`
    font-size: ${({theme}) => theme.FONT_SIZE.SM}px;
@@ -43,7 +44,7 @@ export const StatusType = styled.View`
    align-items:center;
    background-color:${({theme}) => theme.COLORS.GRAY_6};
    border-radius: 1000px;
-   width:150px;
+   max-width:180px;
 `
 
 export const StatusIcon = styled.View<Props>`

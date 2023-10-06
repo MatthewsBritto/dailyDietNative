@@ -10,8 +10,6 @@ import { checkAndCreateMeal } from '@storage/MealsDate/CreateMeal'
 import { addNewMeal } from '@storage/MealsInfos/addNewMeal'
 import { Dataprops, MealProps } from '@storage/MealsDate/MealStorageDTO'
 import { TextInput } from 'react-native'
-import { getAllMealsDate } from '@storage/MealsDate/GetAllMeals'
-import { getMealsInfosByDate } from '@storage/getMealsInfosByDate'
 
 type FormProps = {
    type: 'NEUTRO' | 'GREEN' | 'RED' 
@@ -60,7 +58,9 @@ export function FormMeal() {
             const date = await checkAndCreateMeal(formDate);
 
             const obj: Dataprops = {
+                  id: Math.random().toString(),
                   title:title,
+                  date: date,
                   description:description,
                   time:hour,
                   type:active[0] === true ? "IN" : "OUT"
@@ -68,10 +68,8 @@ export function FormMeal() {
             
             if(date && obj){
                const register = await addNewMeal(date,obj);
-               // navigate('feedback', { type: register});
+               navigate('feedback', { type: register});
             }
-         
-
       } catch(error) {
          throw error
       }

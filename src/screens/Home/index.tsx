@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { getMealsInfosByDate } from "@storage/getMealsInfosByDate";
 import { MealProps } from "@storage/MealsDate/MealStorageDTO";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PercentProps } from "@screens/Analytics";
 
 
 
@@ -20,30 +21,47 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export function Home() {
 
    const [ data, setData ] = useState<MealProps[]>([])
-   
-
    const { navigate } = useNavigation()
-
+   const [ percent, setPercent ] = useState<PercentProps>({inside:0,outside:0,percent:0})
 
    async function handleGoForm(){
       navigate("form",{ type:"NEUTRO" })
    }
 
 
-   function handleGoToAnalytics(){
-      navigate('analytics',{ percent: 65 })
+   function percentCalculate() {
+
+      let inside = 0 , outside = 0
+
+      data.forEach((item) => {
+         for (let i = 0; i < item.data.length; i++) {
+            item.data[i].type ==='IN' ? inside+=1 : outside+=1
+         }
+         
+      })
+
+      let porcentagem =  inside * 100 / ( inside + outside )
+
+      if (porcentagem){
+         const percent = Number.parseFloat(porcentagem.toFixed(2))
+
+         setPercent({
+            inside,
+            outside,
+            percent
+         })
+      }
    }
 
    useEffect(() => { 
-
-      async function Teste() {
-         const teste = await getMealsInfosByDate();         
-         // const teste = await AsyncStorage.clear();         
-         setData(teste);
+      async function FetchData() {
+         const fetch = await getMealsInfosByDate();         
+         setData(fetch);
       }
-      Teste();
+      FetchData();
+      percentCalculate();
 
-   },[])
+   },[data])
 
 
    return(
@@ -51,29 +69,30 @@ export function Home() {
          <Header/>
          <Card 
             styled
-            percent={90.86}
-            title={"90.86%"}
+            percent={percent.percent}
+            title={`${percent.percent}%`}
             subTitle={"refeições dentro da dieta"}
-            onPress={handleGoToAnalytics}
+            onPress={() => navigate('analytics', percent)}
          />
          <Title>Refeições</Title >
          <Button 
             onPress={() => handleGoForm()}
-            // onPress={() => console.log(data)}
             text="Nova refeição"
             icon="Plus"
          />
 
          <SectionList
                sections={data}
-               keyExtractor={(item) => (item.title)}
+               keyExtractor={(item) => (item.id)}
                renderItem={({ item }) => (
                   <Meal
-                     key={item.title}
+                     id={item.id}
+                     key={item.id}
                      time={item.time}
+                     date={item?.date}
                      title={item.title}
-                     type={item.type}
-                     
+                     description={item.description}
+                     type={item.type}                     
                   />
                )}
                renderSectionHeader={({ section }) =>(
